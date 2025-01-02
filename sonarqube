@@ -1,0 +1,26 @@
+name: SonarQube Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  sonarqube:
+    name: SonarQube
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up SonarQube
+        uses: sonarsource/sonarcloud-action@v3
+        with:
+          token: ${{ secrets.SONARQUBE_TOKEN }}
+
+      - name: Run SonarQube analysis
+        run: sonar-scanner
